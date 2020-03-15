@@ -164,4 +164,13 @@ class Database extends \PleskX\Api\Operator
     {
         return $this->_delete($field, $value, 'del-db-user');
     }
+
+    /**
+     * @param string $name
+     * @return Struct\Info
+     */
+    public function getByWebspaceName(string $name)
+    {
+        return $this->get("webspace-name", $name);
+    }
 }
