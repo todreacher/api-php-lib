@@ -143,4 +143,32 @@ class Webspace extends \PleskX\Api\Operator
 
         return reset($items);
     }
+
+    /**
+     * @param string $name
+     * @return Struct\GeneralInfo
+     */
+    public function getByName(string $name)
+    {
+        return $this->get("name", $name);
+    }
+
+    /**
+     * @param string $field
+     * @param int|string $value
+     *
+     * @return Struct\HostingSettings
+     */
+    public function getHostingSettings($field, $value)
+    {
+        $packet = $this->_client->getPacket();
+        $getTag = $packet->addChild($this->_wrapperTag)->addChild('get');
+
+        $getTag->addChild('filter')->addChild($field, $value);
+        $getTag->addChild('dataset')->addChild('hosting');
+
+        $response = $this->_client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
+
+        return new Struct\HostingSettings($response);
+    }
 }
