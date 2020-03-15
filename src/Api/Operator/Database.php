@@ -36,7 +36,7 @@ class Database extends \PleskX\Api\Operator
     private function _process($command, array $properties)
     {
         $packet = $this->_client->getPacket();
-        $info = $packet->addChild($this->_wrapperTag)->addChild($command);
+        $info   = $packet->addChild($this->_wrapperTag)->addChild($command);
 
         foreach ($properties as $name => $value) {
             if (false !== strpos($value, '&')) {
@@ -58,7 +58,7 @@ class Database extends \PleskX\Api\Operator
     {
         $response = $this->_process('set-db-user', $properties);
 
-        return 'ok' === (string) $response->status;
+        return 'ok' === (string)$response->status;
     }
 
     /**
@@ -96,7 +96,7 @@ class Database extends \PleskX\Api\Operator
     public function getAll($field, $value)
     {
         $response = $this->_get('get-db', $field, $value);
-        $items = [];
+        $items    = [];
         foreach ($response->xpath('//result') as $xmlResult) {
             $items[] = new Struct\Info($xmlResult);
         }
@@ -113,7 +113,7 @@ class Database extends \PleskX\Api\Operator
     public function getAllUsers($field, $value)
     {
         $response = $this->_get('get-db-users', $field, $value);
-        $items = [];
+        $items    = [];
         foreach ($response->xpath('//result') as $xmlResult) {
             $items[] = new Struct\UserInfo($xmlResult);
         }
@@ -171,6 +171,6 @@ class Database extends \PleskX\Api\Operator
      */
     public function getByWebspaceName(string $name)
     {
-        return $this->get("webspace-name", $name);
+        return $this->getAll("webspace-name", $name);
     }
 }
