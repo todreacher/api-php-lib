@@ -32,12 +32,12 @@
     },
     "autoload": {
         "psr-4": {
-            "TodReacher\\PleskX\\": "src/"
+            "PleskX\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "TodReacher\\PleskXTest\\": "tests/"
+            "PleskXTest\\": "tests/"
         }
     },
     "extra": {
