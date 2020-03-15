@@ -88,4 +88,33 @@ class Site extends \PleskX\Api\Operator
     {
         return $this->_getItems(Struct\GeneralInfo::class, 'gen_info');
     }
+
+    /**
+     * @param string $name
+     * @return Struct\GeneralInfo
+     */
+    public function getByName(string $name)
+    {
+        return $this->get("name", $name);
+    }
+
+    /**
+     * @param string $siteName
+     * @param string $propertyName
+     * @param string $propertyValue
+     * @return Struct\ResultChangeProperty
+     */
+    public function setPropertyValueBySiteName(string $siteName, string $propertyName, string $propertyValue)
+    {
+        $packet = $this->_client->getPacket();
+        $getTag = $packet->addChild($this->_wrapperTag)->addChild('set');
+
+        $getTag->addChild('filter')->addChild('name', $siteName);
+        $property = $getTag->addChild('values')->addChild('hosting')->addChild('vrt_hst')->addChild('property');
+        $property->addChild('name', $propertyName);
+        $property->addChild('value', $propertyValue);
+
+        $response = $this->_client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
+        return new Struct\ResultChangeProperty($response);
+    }
 }
